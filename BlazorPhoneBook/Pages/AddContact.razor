@@ -1,0 +1,50 @@
+﻿@page "/addcontact"
+@using Contact.Entities.ViewModel
+@using Contact.Services.IServices
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Notifications
+@inject IPersonService personService
+
+
+
+<PageTitle>Add Contact</PageTitle>
+
+
+<h1>AddContact</h1>
+
+<EditForm Model="person" OnSubmit="Create">
+    <label>Name:</label><br/>
+    <InputText @bind-Value="person.Name" />
+    <br />
+    <label>Family:</label><br />
+    <InputText @bind-Value="person.Family" />
+    <br />
+    <button type="submit" class="btn btn-success">Add Person</button>
+    <SfMessage>Please read the comments carefully</SfMessage>
+    <style>
+        .e-message {
+            width: 300px;
+        }
+    </style>
+</EditForm>
+
+
+
+
+
+
+
+
+@code {
+
+    PersonViewModel person;
+    protected override void OnInitialized()
+    {
+        person = new PersonViewModel();
+    }
+    private void Create()
+    {
+        personService.AddPerson(person);
+    }
+    
+}

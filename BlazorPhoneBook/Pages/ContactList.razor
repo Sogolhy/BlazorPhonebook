@@ -1,0 +1,51 @@
+﻿@page "/contactlist"
+
+
+<PageTitle>Contact information</PageTitle>
+
+
+
+@using Contact.Entities.ViewModel
+@using Contact.Services.IServices
+@inject IPersonService personService
+
+<h1>Contact information</h1>
+
+
+@if (persons == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Family</th>
+                <th>PhoneNumber</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in persons)
+            {
+                <tr>
+                    <td>@person.Id</td>
+                    <td>@person.Name</td>
+                    <td>@person.Family</td>
+                    <td>@person.PhoneNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<PersonViewModel>  persons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        persons = personService.GetAll();
+    }
+}
