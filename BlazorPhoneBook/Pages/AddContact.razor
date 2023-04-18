@@ -1,8 +1,6 @@
 ﻿@page "/addcontact"
 @using Contact.Entities.ViewModel
 @using Contact.Services.IServices
-@using Syncfusion.Blazor
-@using Syncfusion.Blazor.Notifications
 @inject IPersonService personService
 
 
@@ -20,12 +18,9 @@
     <InputText @bind-Value="person.Family" />
     <br />
     <button type="submit" class="btn btn-success">Add Person</button>
-    <SfMessage>Please read the comments carefully</SfMessage>
-    <style>
-        .e-message {
-            width: 300px;
-        }
-    </style>
+   
+    <SuccessNotification @ref="_notification"/>
+
 </EditForm>
 
 
@@ -36,7 +31,7 @@
 
 
 @code {
-
+    private SuccessNotification _notification;
     PersonViewModel person;
     protected override void OnInitialized()
     {
@@ -45,6 +40,7 @@
     private void Create()
     {
         personService.AddPerson(person);
+        _notification.Show();
     }
     
 }
